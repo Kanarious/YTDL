@@ -2,21 +2,15 @@ package com.example.ytdl;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.View;
 import android.widget.EditText;
 
 import com.example.messagesutil.UIMessages;
 
-import java.util.Arrays;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
 
     //--Class Objects--//
     YouTubeDownloader Downloader;
+
+    //Class Variables
+    private final String TAG = "MainActivity";
 
     /**
      * Activity OnCreate Event Procedure
@@ -44,18 +41,28 @@ public class MainActivity extends AppCompatActivity {
         EDIT_link = findViewById(R.id.EDIT_link);
     }
 
-
+    /**
+     * Button Click procedure to initiate Downloader with YouTube link contained in 'EDIT_link' Edit Box
+     * @param v
+     */
     public void downloadClick(View v){
         //get link from edit box
         String link_ = EDIT_link.getText().toString();
 
+        //Check for empty link
         if(link_.isEmpty()){
-            UIMessages.showToast();
+            UIMessages.showToast(this,"Please Input Youtube Link");
         }
+        //check for invalid link
+        else if (!Downloader.checkLink(link_)){
+            UIMessages.showToast(this,"Invalid Link");
+        }
+        //Send link to Downloader
         else {
+            Log.d(TAG,"Starting Downloader");
             Downloader.linkDownload(link_);
         }
-        Log.d("UriExtactor","Starting Extractor");
+
     }
 
 }

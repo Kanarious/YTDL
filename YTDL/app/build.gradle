@@ -53,7 +53,7 @@ dependencies {
     implementation 'com.github.HaarigerHarald:android-youtubeExtractor:master-SNAPSHOT'
 
     //MessagesUtility Library
-    implementation 'com.github.Kanarious:MessagesUtil-Android:0.1.0'
+    implementation 'com.github.Kanarious:MessagesUtil-Android:0.1.1'
 
 
 }
