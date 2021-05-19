@@ -1,0 +1,9 @@
+[submodule "android-youtubeExtractor"]
+	path = android-youtubeExtractor
+	url = https://github.com/HaarigerHarald/android-youtubeExtractor.git
+[submodule "js-evaluator-for-android"]
+	path = js-evaluator-for-android
+	url = https://github.com/evgenyneu/js-evaluator-for-android
+[submodule "MessagesUtil-Android"]
+	path = MessagesUtil-Android
+	url = https://github.com/Kanarious/MessagesUtil-Android.git
