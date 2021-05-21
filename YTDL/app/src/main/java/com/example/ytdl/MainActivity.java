@@ -1,3 +1,6 @@
+/**************************************************************************************************
+* This Activity is the Main Activity for all application processes.
+***************************************************************************************************/
 package com.example.ytdl;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         //Create and Set Youtube Downloader
         Downloader = new YouTubeDownloader(this);
@@ -39,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
 
         //Assign Widgets
         EDIT_link = findViewById(R.id.EDIT_link);
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
     }
 
     /**
@@ -60,7 +64,9 @@ public class MainActivity extends AppCompatActivity {
         //Send link to Downloader
         else {
             Log.d(TAG,"Starting Downloader");
-            Downloader.linkDownload(link_);
+            if ( !Downloader.linkDownload(link_) ){
+                UIMessages.showToast(this,"Failed to Download");
+            };
         }
 
     }

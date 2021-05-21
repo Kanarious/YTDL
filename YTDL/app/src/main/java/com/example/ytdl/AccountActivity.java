@@ -1,3 +1,6 @@
+/**************************************************************************************************
+* This Activity will handle user authentication with OAuth2.0 for use of Google's YouTube API.
+***************************************************************************************************/
 package com.example.ytdl;
 
 import androidx.appcompat.app.AppCompatActivity;
