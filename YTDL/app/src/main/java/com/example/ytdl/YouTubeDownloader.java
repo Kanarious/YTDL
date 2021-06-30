@@ -22,7 +22,7 @@ public class YouTubeDownloader {
 
     private Context mContext;
     private DownloadManager download_manager;
-    private final String TAG = "YouYubeDownloader";
+    private final String TAG = "YouTubeDownloader";
 
     /**
      * Class Constructor
@@ -86,13 +86,28 @@ public class YouTubeDownloader {
 
                                         Log.i(TAG,"Parsing and attempting download");
                                         Uri youtubeUri = Uri.parse(download_url);
+                                        Log.i(TAG, "Creating download manager request");
                                         DownloadManager.Request request = new DownloadManager.Request(youtubeUri);
+                                        Log.i(TAG, "Setting download manager request");
                                         request.setTitle(title);
                                         request.allowScanningByMediaScanner();
                                         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                                         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                                        download_manager.enqueue(request);
-                                        UIMessages.showToast(mContext,"Download Started");
+                                        Log.i(TAG, "Sending download manager request");
+                                        Boolean download_started = true;
+                                        try {
+                                            download_manager.enqueue(request);
+                                        }
+                                        catch (Exception e){
+                                            Log.e(TAG, "onExtractionComplete: ", e);
+                                            download_started = false;
+                                        }
+                                        if (download_started) {
+                                            UIMessages.showToast(mContext, "Download Started");
+                                        }
+                                        else{
+                                            UIMessages.showToast(mContext, "DOWNLOAD FAILED");
+                                        }
                                         return;
                                     }
                                 }

@@ -4,18 +4,19 @@
 package com.example.ytdl;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 import com.example.messagesutil.UIMessages;
-
-import static com.google.common.base.Predicates.isNull;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,12 +64,31 @@ public class MainActivity extends AppCompatActivity {
         }
         //Send link to Downloader
         else {
-            Log.d(TAG,"Starting Downloader");
-            if ( !Downloader.linkDownload(link_) ){
-                UIMessages.showToast(this,"Failed to Download");
-            };
+            if (isStoragePermissionGranted()) {
+                Log.d(TAG,"Starting Downloader");
+                if ( !Downloader.linkDownload(link_) ){
+                    UIMessages.showToast(this,"Failed to Download");
+                };
+            }
+            else {
+                UIMessages.showToast(this, "Accept Permissions First");
+            }
         }
-
     }
 
+    public boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG, "Permission is granted");
+                return true;
+            } else {
+                Log.v(TAG, "Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            return true;
+        }
+    }
 }
