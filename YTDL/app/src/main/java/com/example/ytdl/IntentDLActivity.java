@@ -27,14 +27,16 @@ public class IntentDLActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_intent_d_l);
 
         //Check if application was launched with share
         if (savedInstanceState == null && Intent.ACTION_SEND.equals(getIntent().getAction())
                 && getIntent().getType() != null && "text/plain".equals(getIntent().getType())) {
-
+            //Check if necessary permissions are granted
             if ( isStoragePermissionGranted() ) {
+
                 //Create and Set Youtube Downloader
-                Downloader = new YouTubeDownloader(this);
+                Downloader = new YouTubeDownloader(this, true);
                 Downloader.setDownload_manager((DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE));
 
                 //Get link from Intent
@@ -46,12 +48,15 @@ public class IntentDLActivity extends Activity {
                     if (!Downloader.linkDownload(yt_link)) {
                         UIMessages.showToast(this, "Failed to Download");
                     }
+                    else{
+                        UIMessages.showToast(this,"Getting Data...");
+                    }
                 } else {
                     UIMessages.showToast(this, "Invalid Link");
                 }
             }
             //Terminate Activity
-            finish();
+//            finish();
         }
     }
 

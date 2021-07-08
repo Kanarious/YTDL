@@ -7,11 +7,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -39,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Create and Set Youtube Downloader
-        Downloader = new YouTubeDownloader(this);
+        Downloader = new YouTubeDownloader(this, false);
         Downloader.setDownload_manager((DownloadManager)getSystemService(Context.DOWNLOAD_SERVICE));
 
         //Assign Widgets
@@ -64,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         }
         //Send link to Downloader
         else {
+
             if (isStoragePermissionGranted()) {
                 Log.d(TAG,"Starting Downloader");
                 if ( !Downloader.linkDownload(link_) ){
