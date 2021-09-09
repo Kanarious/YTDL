@@ -36,3 +36,6 @@
 ehthumbs.db
 Thumbs.db
 
+# Private Files #
+#################
+/YTDL/app/src/main/res/raw/client_secret.json
